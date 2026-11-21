@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Unslouch</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>Unslouch</h1>
+    <span id="count"></span>
+    <button id="viewbtn">Calendar</button>
+  </header>
+  <section id="cal" class="off"></section>
+  <main id="main">
+  <svg id="plant" viewBox="0 20 200 152" role="img" aria-label="A plant that grows with each break you finish"></svg>
+  <svg id="pose" class="off" viewBox="0 -22 200 152" role="img" aria-label="A figure doing this exercise"></svg>
+  <nav id="trail" aria-label="Today's breaks"></nav>
+  <section id="card"></section>
+  <div class="daybar">
+    <button id="finish">Day finished</button>
+    <button id="reset">Reset</button>
+  </div>
+  <div id="tally"></div>
+  <details>
+    <summary>Shift hours</summary>
+    <div class="shift">
+      <label>From <input type="time" id="start" step="1800"></label>
+      <label>to <input type="time" id="end" step="1800"></label>
+    </div>
+    <p id="err"></p>
+  </details>
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
