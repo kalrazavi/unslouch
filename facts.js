@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Ali Razavi. All rights reserved. Owned and controlled solely by Ali Razavi: no licence check, no remote control, no backdoor. Terms: see the LICENSE file.
 // Why any of this is worth standing up for. One list per move, plus `all` for the routine as a whole.
 // Kept honest on purpose: these are things physiotherapy and sitting-research actually support,
 // worded no stronger than the evidence. Add your own lines freely; they are picked at random.

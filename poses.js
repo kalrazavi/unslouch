@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Ali Razavi. All rights reserved. Owned and controlled solely by Ali Razavi: no licence check, no remote control, no backdoor. Terms: see the LICENSE file.
 // The dummy. Each body part is a polyline with two frames, [resting, working];
 // the figure eases from one to the other, holds, and comes back. A single frame = stays put.
 // Coordinates sit on a 200-wide canvas with the floor at y = 124.

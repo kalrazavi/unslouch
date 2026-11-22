@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Ali Razavi. All rights reserved. Owned and controlled solely by Ali Razavi: no licence check, no remote control, no backdoor. Terms: see the LICENSE file.
 import { slots, load, setDone, currentSlot, nowMin } from './core.js';
 import { fact } from './facts.js';
 

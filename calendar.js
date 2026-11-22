@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Ali Razavi. All rights reserved. Owned and controlled solely by Ali Razavi: no licence check, no remote control, no backdoor. Terms: see the LICENSE file.
 // Year calendar. A day you pressed "Day finished" gets a green check; a past day you
 // didn't (it closed itself as incomplete, or was never opened) gets a cross.
 // Days before you started using Unslouch, and future days, stay blank.

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Ali Razavi. All rights reserved. Owned and controlled solely by Ali Razavi: no licence check, no remote control, no backdoor. Terms: see the LICENSE file.
 // Shared by the popup and the background worker: the routine, the schedule, and storage.
 
 export const DEFAULT_CFG = { start: 14 * 60, end: 22 * 60 }; // minutes from midnight
