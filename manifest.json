@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Unslouch",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Posture and movement breaks through your shift. Do the move, check it off, grow the plant.",
   "permissions": ["alarms", "notifications", "storage"],
   "background": { "service_worker": "background.js", "type": "module" },

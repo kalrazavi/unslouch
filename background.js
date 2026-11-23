@@ -44,6 +44,13 @@ async function sync(notify) {
 }
 
 chrome.alarms.onAlarm.addListener(async (a) => {
+  // An exercise timer ran out while the popup was closed: check that break off.
+  if (a.name === 'timer') {
+    const { run } = await chrome.storage.session.get('run');
+    await chrome.storage.session.remove('run');
+    if (run && run.day === new Date().toLocaleDateString('en-CA')) await setDone(run.t);
+    return sync(false);
+  }
   await sync(true);
   if (a.name === 'slot') await schedule();
 });

@@ -150,21 +150,33 @@ async function finish(t, on = true) {
 }
 
 // ---- timer ----
+// Chrome closes the popup whenever it loses focus (switching tabs, minimising), so the timer
+// can't live only here. Its start time goes in session storage (kept until Chrome quits) and
+// the popup works out where it is from the clock. If the popup is closed when it runs out,
+// the background worker checks the break off (see background.js).
 
-function startTimer(s) {
+const session = globalThis.chrome?.storage?.session;
+const today = () => new Date().toLocaleDateString('en-CA');
+
+// `resumeFrom` = start time of a timer that was already running before the popup opened.
+function startTimer(s, resumeFrom) {
   const steps = s.ex.steps;
-  let i = 0;
-  let end = Date.now() + steps[0][1] * 1000;
+  const total = steps.reduce((n, [, x]) => n + x, 0);
+  const start = resumeFrom ?? Date.now();
+  if (resumeFrom == null) {
+    session?.set({ run: { t: s.t, day: today(), start } });
+    globalThis.chrome?.alarms?.create('timer', { when: start + total * 1000 });
+  }
   const tick = () => {
-    let left = Math.ceil((end - Date.now()) / 1000);
-    if (left <= 0) {
-      if (++i >= steps.length) return finish(s.t);
-      end = Date.now() + steps[i][1] * 1000;
-      left = steps[i][1];
-    }
+    let left = (start + total * 1000 - Date.now()) / 1000;
+    if (left <= 0) return finish(s.t);
+    // Walk back from the end to find which step we're in and how long it has left.
+    let i = steps.length - 1;
+    while (i > 0 && left > steps[i][1]) left -= steps[i--][1];
     const b = $('timer');
-    if (b) b.textContent = `${steps[i][0]} · ${clock(left)} ✕`;
+    if (b) b.textContent = `${steps[i][0]} · ${clock(Math.ceil(left))} ✕`;
   };
+  clearInterval(timer);
   timer = setInterval(tick, 200);
   tick();
 }
@@ -172,7 +184,24 @@ function startTimer(s) {
 function stopTimer(redraw) {
   clearInterval(timer);
   timer = null;
+  session?.remove('run');
+  globalThis.chrome?.alarms?.clear('timer');
   if (redraw) render();
+}
+
+// Opening the popup picks a running timer back up where it is now.
+async function resume() {
+  const { run } = session ? await session.get('run') : {};
+  if (!run) return render();
+  const st = await load();
+  const s = slots(st.cfg).find((x) => x.t === run.t);
+  if (run.day !== today() || !s?.ex.steps || st.done.includes(run.t)) {
+    stopTimer();
+    return render();
+  }
+  sel = run.t;
+  await render();
+  startTimer(s, run.start);
 }
 
 const clock = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
@@ -304,4 +333,4 @@ for (const id of ['start', 'end']) {
 
 globalThis.chrome?.storage?.onChanged.addListener(() => { if (!timer) render(); });
 setInterval(() => { if (!timer) render(); }, 20000);
-render();
+resume();
