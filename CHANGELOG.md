@@ -7,6 +7,7 @@ Dates are when the change went live. Commit IDs link each entry to the code.
 ---
 
 ## v1.0.2 · 23 Nov 2026 · Timer keeps running
+`fb54e3e`
 
 ### Fixed
 - **Switching tabs reset the exercise timer.** Chrome closes the popup as soon as you click away, and the timer lived inside it, so it started over every time. The timer now remembers when it started and keeps running as long as Chrome is open, even if I switch tabs, minimise Chrome or close the popup. Reopening the popup shows the time left, and if it runs out while the popup is closed, the break is still checked off.
